@@ -1,19 +1,7 @@
-import { initCanvas, initShaderProgram } from '../util';
+import { initCanvas, initShaderProgram } from '../../util';
+import vsSource from './index.vert';
+import fsSource from './index.frag';
 
-const vsSource = `
-attribute vec4 a_Position;
-uniform mat4 u_xformMatrix;
-void main() {
-  gl_Position = u_xformMatrix * a_Position;
-}
-`;
-const fsSource = `
-precision mediump float;
-uniform vec4 u_FragColor;
-void main() {
-  gl_FragColor = u_FragColor;
-}
-`;
 const TWICE_PI = 2 * Math.PI;
 
 export default function init(container) {

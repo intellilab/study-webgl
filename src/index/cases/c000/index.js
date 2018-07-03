@@ -1,25 +1,12 @@
 import h from '@gera2ld/jsx-dom';
-import { initCanvas, initShaderProgram } from '../util';
+import { initCanvas, initShaderProgram } from '../../util';
+import vsSource from './index.vert';
+import fsSource from './index.frag';
 
 const WIDTH = 600;
 const HEIGHT = 600;
 const HWIDTH = WIDTH / 2;
 const HHEIGHT = HEIGHT / 2;
-const vsSource = `
-attribute vec4 a_Position;
-attribute float a_PointSize;
-void main() {
-  gl_Position = a_Position;
-  gl_PointSize = a_PointSize;
-}
-`;
-const fsSource = `
-precision mediump float;
-uniform vec4 u_FragColor;
-void main() {
-  gl_FragColor = u_FragColor;
-}
-`;
 const points = [];
 const colors = [];
 

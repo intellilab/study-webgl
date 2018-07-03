@@ -44,6 +44,11 @@ let baseConfig = {
         exclude: [resolve('src/resources/icons')],
       },
       {
+        test: /\.(vert|frag)$/,
+        use: 'raw-loader',
+        include: [resolve('src')],
+      },
+      {
         test: /\.svg$/,
         use: [{
           loader: 'svg-sprite-loader',

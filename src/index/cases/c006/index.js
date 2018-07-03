@@ -1,22 +1,6 @@
-import { initCanvas, initShaderProgram } from '../util';
-
-const vsSource = `
-attribute vec4 a_Position;
-attribute vec2 a_TexCoord;
-varying vec2 v_TexCoord;
-void main() {
-  gl_Position = a_Position;
-  v_TexCoord = a_TexCoord;
-}
-`;
-const fsSource = `
-precision mediump float;
-uniform sampler2D u_Sampler;
-varying vec2 v_TexCoord;
-void main() {
-  gl_FragColor = texture2D(u_Sampler, v_TexCoord);
-}
-`;
+import { initCanvas, initShaderProgram } from '../../util';
+import vsSource from './index.vert';
+import fsSource from './index.frag';
 
 export default async function init(container) {
   const { gl } = initCanvas(container, 600, 600);

@@ -1,8 +1,8 @@
 import h from '@gera2ld/jsx-dom';
 import './style.css';
 
-const requireCase = require.context('./cases', false, /\.js$/);
-const names = requireCase.keys().map(path => path.slice(2));
+const requireCase = require.context('./cases', true, /\/index\.js$/);
+const names = requireCase.keys().map(path => path.slice(2, -9));
 
 const container = <div id="root"></div>;
 document.body.append(container);
@@ -12,7 +12,7 @@ loadCase();
 async function loadCase() {
   const key = window.location.hash.slice(1);
   if (key) {
-    const { default: init } = await requireCase(`./${key}`);
+    const { default: init } = await requireCase(`./${key}/index.js`);
     container.innerHTML = '';
     container.append(<div><a href="#">&larr; Back</a></div>);
     init(container);

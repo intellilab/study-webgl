@@ -1,21 +1,6 @@
-import { initCanvas, initShaderProgram } from '../util';
-
-const vsSource = `
-attribute vec4 a_Position;
-attribute vec4 a_Color;
-varying vec4 v_Color;
-void main() {
-  gl_Position = a_Position;
-  v_Color = a_Color;
-}
-`;
-const fsSource = `
-precision mediump float;
-varying vec4 v_Color;
-void main() {
-  gl_FragColor = v_Color;
-}
-`;
+import { initCanvas, initShaderProgram } from '../../util';
+import vsSource from './index.vert';
+import fsSource from './index.frag';
 
 export default function init(container) {
   const { gl } = initCanvas(container, 600, 600);

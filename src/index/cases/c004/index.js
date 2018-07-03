@@ -1,23 +1,7 @@
-import { initCanvas, initShaderProgram } from '../util';
+import { initCanvas, initShaderProgram, matrix } from '../../util';
+import vsSource from './index.vert';
+import fsSource from './index.frag';
 
-const vsSource = `
-attribute vec4 a_Position;
-uniform float u_CosB;
-uniform float u_SinB;
-void main() {
-  gl_Position.x = a_Position.x * u_CosB - a_Position.y * u_SinB;
-  gl_Position.y = a_Position.x * u_SinB + a_Position.y * u_CosB;
-  gl_Position.z = a_Position.z;
-  gl_Position.w = 1.0;
-}
-`;
-const fsSource = `
-precision mediump float;
-uniform vec4 u_FragColor;
-void main() {
-  gl_FragColor = u_FragColor;
-}
-`;
 const TWICE_PI = 2 * Math.PI;
 
 export default function init(container) {
@@ -25,11 +9,10 @@ export default function init(container) {
   const program = initShaderProgram(gl, vsSource, fsSource);
   const aPosition = gl.getAttribLocation(program, 'a_Position');
   const uFragColor = gl.getUniformLocation(program, 'u_FragColor');
-  const uCosB = gl.getUniformLocation(program, 'u_CosB');
-  const uSinB = gl.getUniformLocation(program, 'u_SinB');
+  const uXformMatrix = gl.getUniformLocation(program, 'u_xformMatrix');
 
   const vertices = new Float32Array([
-    -0.5, 0.5, -0.5, -0.5, 0.5, 0.5,
+    -0.5, 0.5, 0, 0, 0.5, 0.5,
   ]);
   const vertexBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
@@ -41,12 +24,17 @@ export default function init(container) {
 
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   let rad = 0;
+  const [tx, ty, tz] = [0.0, 0.25, 0.0];
+  const [sx, sy, sz] = [0.5, 0.5, 0.5];
   draw();
 
   function draw() {
     requestAnimationFrame(draw);
-    gl.uniform1f(uCosB, Math.cos(rad));
-    gl.uniform1f(uSinB, Math.sin(rad));
+    let xformMatrix = matrix.create();
+    xformMatrix = matrix.scale(xformMatrix, sx, sy, sz);
+    xformMatrix = matrix.translate(xformMatrix, tx, ty, tz);
+    xformMatrix = matrix.rotate(xformMatrix, rad);
+    gl.uniformMatrix4fv(uXformMatrix, false, xformMatrix);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     rad += 0.01;

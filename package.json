@@ -10,7 +10,8 @@
     "prebuild": "yarn lint && gulp clean",
     "build": "cross-env NODE_ENV=production gulp build",
     "lint": "eslint --ext .js,.vue .",
-    "svgo": "svgo --config .svgo.yml src/resources/icons"
+    "svgo": "svgo --config .svgo.yml src/resources/icons",
+    "deploy": "sh scripts/deploy.sh"
   },
   "engines": {
     "node": ">=8"

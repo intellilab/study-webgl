@@ -188,7 +188,7 @@ export default function init(container) {
   function draw() {
     requestAnimationFrame(draw);
     const matrix = [
-      m4.projection(300, 300, 400),
+      m4.orthographic(0, 300, 300, 0, 200, -200),
       // m4.scaling(0.5, 0.5, 1.0),
       m4.translation(150, 150, 0),
       m4.xRotation(radX),

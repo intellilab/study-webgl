@@ -1,6 +1,8 @@
 import h from '@gera2ld/jsx-dom';
 
 export * as matrix from './matrix';
+export * as m3 from './m3';
+export * as m4 from './m4';
 
 export function initCanvas(container, width = 800, height = 600) {
   const canvas = <canvas width={width} height={height} />;

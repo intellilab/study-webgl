@@ -24,7 +24,7 @@ module.exports = {
     'consistent-return': 'off',
     'no-use-before-define': ['error', 'nofunc'],
     'no-mixed-operators': 'off',
-    'no-bitwise': ['error', { int32Hint: true }],
+    'no-bitwise': 'off',
     'arrow-parens': ['error', 'as-needed'],
     'prefer-promise-reject-errors': 'off',
     'prefer-destructuring': ['error', { array: false }],
@@ -35,6 +35,7 @@ module.exports = {
     // Turn off warnings for modern browsers
     'no-restricted-syntax': 'off',
     'no-await-in-loop': 'off',
+    'no-multi-spaces': 'off',
   },
   settings: {
     react: {

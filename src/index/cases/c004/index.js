@@ -26,15 +26,15 @@ export default function init(container) {
   let rad = 0;
   const [tx, ty, tz] = [0.0, 0.25, 0.0];
   const [sx, sy, sz] = [0.5, 0.5, 0.5];
+  const baseMatrix = new matrix.Matrix();
+  baseMatrix.scale(sx, sy, sz).translate(tx, ty, tz);
   draw();
 
   function draw() {
     requestAnimationFrame(draw);
-    let xformMatrix = matrix.create();
-    xformMatrix = matrix.scale(xformMatrix, sx, sy, sz);
-    xformMatrix = matrix.translate(xformMatrix, tx, ty, tz);
-    xformMatrix = matrix.rotate(xformMatrix, rad);
-    gl.uniformMatrix4fv(uXformMatrix, false, xformMatrix);
+    const transformMatrix = new matrix.Matrix(baseMatrix);
+    transformMatrix.rotate(rad);
+    gl.uniformMatrix4fv(uXformMatrix, false, transformMatrix.value);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     rad += 0.01;

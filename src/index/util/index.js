@@ -1,4 +1,5 @@
 import h from '@gera2ld/jsx-dom';
+import { memoize } from './helper';
 
 export * as matrix from './matrix';
 export * as m3 from './m3';
@@ -28,3 +29,5 @@ export function loadShader(gl, type, source) {
   gl.compileShader(shader);
   return shader;
 }
+
+export const getColor = memoize(() => [Math.random(), Math.random(), Math.random()]);

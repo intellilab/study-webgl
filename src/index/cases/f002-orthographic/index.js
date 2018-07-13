@@ -1,4 +1,9 @@
-import { initCanvas, initShaderProgram, m4 } from '../../util';
+import {
+  initCanvas,
+  initShaderProgram,
+  m4,
+  getColor,
+} from '../../util';
 import vsSource from './index.vert';
 import fsSource from './index.frag';
 
@@ -119,15 +124,6 @@ export default function init(container) {
     30,   150,  30,
     30,   150,  0,
   ]);
-  const cache = {};
-  const getColor = index => {
-    let color = cache[index];
-    if (!color) {
-      color = [Math.random(), Math.random(), Math.random()];
-      cache[index] = color;
-    }
-    return color;
-  };
   const colorArray = [
     getColor(0),
     getColor(0),
@@ -172,9 +168,6 @@ export default function init(container) {
   gl.enableVertexAttribArray(aColor);
 
   const uMatrix = gl.getUniformLocation(program, 'u_matrix');
-
-  const uColor = gl.getUniformLocation(program, 'u_color');
-  gl.uniform4fv(uColor, [Math.random(), Math.random(), Math.random(), 1]);
 
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   gl.enable(gl.CULL_FACE);

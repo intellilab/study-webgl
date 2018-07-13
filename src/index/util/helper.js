@@ -12,3 +12,18 @@ export function multiplyM(mat1, mat2, size) {
   }
   return out;
 }
+
+export function memoize(func, resolver) {
+  const cache = {};
+  return function memoized(...args) {
+    const key = resolver ? resolver(...args) : `${args[0]}`;
+    let cached = cache[key];
+    if (!cached) {
+      cached = {
+        value: func.apply(this, args),
+      };
+      cache[key] = cached;
+    }
+    return cached.value;
+  };
+}

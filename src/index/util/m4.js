@@ -1,4 +1,4 @@
-import { multiplyM } from './calc';
+import { multiplyM } from './helper';
 
 export function identity() {
   return [

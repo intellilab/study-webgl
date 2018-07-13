@@ -84,3 +84,14 @@ export function orthographic(left, right, bottom, top, near, far) {
     1,
   ];
 }
+
+export function perspective(fieldOfView, aspect, near, far) {
+  const f = Math.tan(Math.PI * 0.5 - 0.5 * fieldOfView);
+  const rangeInv = 1.0 / (near - far);
+  return [
+    f / aspect, 0, 0, 0,
+    0, f, 0, 0,
+    0, 0, (near + far) * rangeInv, -1,
+    0, 0, near * far * rangeInv * 2, 0,
+  ];
+}

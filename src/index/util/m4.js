@@ -1,13 +1,9 @@
-import { multiplyM } from './helper';
-
-export function identity() {
-  return [
-    1, 0, 0, 0,
-    0, 1, 0, 0,
-    0, 0, 1, 0,
-    0, 0, 0, 1,
-  ];
-}
+import {
+  multiplyM,
+  subtractV,
+  normalizeV,
+  crossV,
+} from './helper';
 
 export function translation(tx, ty, tz) {
   return [
@@ -93,5 +89,17 @@ export function perspective(fieldOfView, aspect, near, far) {
     0, f, 0, 0,
     0, 0, (near + far) * rangeInv, -1,
     0, 0, near * far * rangeInv * 2, 0,
+  ];
+}
+
+export function lookAt(camera, target, up) {
+  const zAxis = normalizeV(subtractV(camera, target));
+  const xAxis = normalizeV(crossV(up, zAxis));
+  const yAxis = normalizeV(crossV(zAxis, xAxis));
+  return [
+    ...xAxis, 0,
+    ...yAxis, 0,
+    ...zAxis, 0,
+    ...camera, 1,
   ];
 }

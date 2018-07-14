@@ -4,6 +4,7 @@ import { memoize } from './helper';
 export * as matrix from './matrix';
 export * as m3 from './m3';
 export * as m4 from './m4';
+export * as helper from './helper';
 
 export function initCanvas(container, width = 800, height = 600) {
   const canvas = <canvas width={width} height={height} />;

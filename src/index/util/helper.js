@@ -27,7 +27,20 @@ export function multiplyM(mat1, mat2, size) {
   return out;
 }
 
-export function subtractV(vec1, vec2) {
+export function multiplyV(mat, vec) {
+  const size = vec.length;
+  const out = [];
+  for (let i = 0; i < size; i += 1) {
+    let sum = 0;
+    for (let j = 0; j < size; j += 1) {
+      sum += mat[i + size * j] * vec[j];
+    }
+    out[i] = sum;
+  }
+  return out;
+}
+
+export function subtractV3(vec1, vec2) {
   const out = [];
   for (let i = 0; i < vec1.length; i += 1) {
     out[i] = vec1[i] - vec2[i];
@@ -35,13 +48,13 @@ export function subtractV(vec1, vec2) {
   return out;
 }
 
-export function normalizeV(vec) {
+export function normalizeV3(vec) {
   const [x, y, z] = vec;
   const len = Math.sqrt(x * x + y * y + z * z);
   return len > 0.00001 ? [x / len, y / len, z / len] : [0, 0, 0];
 }
 
-export function crossV(vec1, vec2) {
+export function crossV3(vec1, vec2) {
   const [x1, y1, z1] = vec1;
   const [x2, y2, z2] = vec2;
   return [

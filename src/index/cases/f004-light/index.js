@@ -127,27 +127,33 @@ export default function init(container) {
     30,   150,  30,
     30,   150,  0,
   ]);
-  const normals = [
-    [0, 0, 1],
-    [0, 0, 1],
-    [0, 0, 1],
-    [0, 0, -1],
-    [0, 0, -1],
-    [0, 0, -1],
-    [0, 1, 0],
-    [-1, 0, 0],
-    [1, 0, 0],
-    [1, 0, 0],
-    [0, -1, 0],
-    [1, 0, 0],
-    [0, 1, 0],
-    [0, -1, 0],
-    [1, 0, 0],
-    [0, -1, 0],
-  ]
-  .map(item => Array.from({ length: 6 }, () => item))
-  .reduce((res, item) => [...res, ...item])
-  .reduce((res, item) => [...res, ...item]);
+  const getPoint = i => Array.from(
+    { length: 3 },
+    (_, j) => vertexData[i + j],
+  );
+  const getPoints = (i, n) => Array.from(
+    { length: n },
+    (_1, j) => getPoint(i + 3 * j),
+  );
+  const baseTransform = [
+    m4.xRotation(Math.PI),
+    m4.translation(-50, -75, 0),
+  ].reduce(m4.multiply);
+  for (let i = 0; i < vertexData.length; i += 3) {
+    const point = getPoint(i);
+    const transformed = m4.transformPoint(baseTransform, point);
+    for (let j = 0; j < 3; j += 1) vertexData[i + j] = transformed[j];
+  }
+  const normals = [];
+  for (let i = 0; i < vertexData.length; i += 6 * 3) {
+    for (let j = 0; j < 2; j += 1) {
+      const points = getPoints(i + 3 * 3 * j, 3);
+      const v1 = helper.subtractV3(points[1], points[0]);
+      const v2 = helper.subtractV3(points[2], points[1]);
+      const normal = helper.normalizeV3(helper.crossV3(v1, v2));
+      for (let k = 0; k < 3; k += 1) normals.push(...normal);
+    }
+  }
   const normalData = new Float32Array(normals);
   const FSIZE = vertexData.BYTES_PER_ELEMENT;
 
@@ -172,7 +178,7 @@ export default function init(container) {
   const uWorld = gl.getUniformLocation(program, 'u_world');
 
   const uReverseLightDirection = gl.getUniformLocation(program, 'u_reverseLightDirection');
-  gl.uniform3fv(uReverseLightDirection, helper.normalizeV([0.5, 0.7, 1]));
+  gl.uniform3fv(uReverseLightDirection, helper.normalizeV3([0.5, 0.7, 1]));
 
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   gl.enable(gl.CULL_FACE);
@@ -198,8 +204,6 @@ export default function init(container) {
     const matrix = [
       baseMatrix,
       worldMatrix,
-      m4.xRotation(Math.PI),
-      m4.translation(-50, -75, 0),
     ].reduce(m4.multiply);
     gl.uniformMatrix4fv(uWorldViewProjection, false, matrix);
     gl.uniformMatrix4fv(uWorld, false, worldMatrix);

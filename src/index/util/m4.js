@@ -1,8 +1,9 @@
 import {
   multiplyM,
-  subtractV,
-  normalizeV,
-  crossV,
+  multiplyV,
+  subtractV3,
+  normalizeV3,
+  crossV3,
 } from './helper';
 
 export function translation(tx, ty, tz) {
@@ -93,13 +94,20 @@ export function perspective(fieldOfView, aspect, near, far) {
 }
 
 export function lookAt(camera, target, up) {
-  const zAxis = normalizeV(subtractV(camera, target));
-  const xAxis = normalizeV(crossV(up, zAxis));
-  const yAxis = normalizeV(crossV(zAxis, xAxis));
+  const zAxis = normalizeV3(subtractV3(camera, target));
+  const xAxis = normalizeV3(crossV3(up, zAxis));
+  const yAxis = normalizeV3(crossV3(zAxis, xAxis));
   return [
     ...xAxis, 0,
     ...yAxis, 0,
     ...zAxis, 0,
     ...camera, 1,
   ];
+}
+
+export function transformPoint(mat, point) {
+  const vec = [...point, 1];
+  const transformed = multiplyV(mat, vec);
+  const w = transformed.pop();
+  return transformed.map(v => v / w);
 }

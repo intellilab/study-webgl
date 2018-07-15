@@ -48,10 +48,15 @@ export function subtractV3(vec1, vec2) {
   return out;
 }
 
+const EPSILON = 0.00001;
+export function isZero(v) {
+  return v < EPSILON && v > -EPSILON;
+}
+
 export function normalizeV3(vec) {
   const [x, y, z] = vec;
   const len = Math.sqrt(x * x + y * y + z * z);
-  return len > 0.00001 ? [x / len, y / len, z / len] : [0, 0, 0];
+  return isZero(len) ? [0, 0, 0] : [x / len, y / len, z / len];
 }
 
 export function crossV3(vec1, vec2) {
@@ -66,16 +71,24 @@ export function crossV3(vec1, vec2) {
 
 export function triangular(mat, size) {
   const out = [...mat];
+  const addRow = (target, source, k = 1) => {
+    for (let i = 0; i < size; i += 1) {
+      out[i * size + target] += k * out[i * size + source];
+    }
+  };
   for (let i = size - 1; i >= 0; i -= 1) {
-    for (let j = i - 1; j >= 0; j -= 1) {
-      const v0 = out[i * size + i];
-      if (!v0) return null;
-      const v = out[i * size + j];
-      if (v) {
-        const x = -v / v0;
-        for (let k = 0; k < size; k += 1) {
-          out[k * size + j] += x * out[k * size + i];
-        }
+    let k = i;
+    let v0;
+    while (k >= 0) {
+      v0 = out[i * size + k];
+      if (!isZero(v0)) break;
+      k -= 1;
+    }
+    if (k >= 0) {
+      if (k !== i) addRow(i, k);
+      for (let j = i - 1; j >= 0; j -= 1) {
+        const v = out[i * size + j];
+        if (!isZero(v)) addRow(j, i, -v / v0);
       }
     }
   }

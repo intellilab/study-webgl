@@ -10,15 +10,19 @@ module.exports = {
     'react',
   ],
   // check if imports actually resolve
-  'settings': {
+  settings: {
+    react: {
+      pragma: 'h',
+    },
     'import/resolver': {
-      'webpack': {
-        'config': 'scripts/webpack.base.conf.js',
+      webpack: {
+        config: 'scripts/webpack.base.conf.js',
       },
     },
   },
   rules: {
     'react/jsx-uses-react': 'error',
+    'react/react-in-jsx-scope': 'error',
     'import/extensions': ['error', 'always', { js: 'never' }],
     'no-param-reassign': ['error', { props: false }],
     'consistent-return': 'off',
@@ -32,14 +36,9 @@ module.exports = {
       allow: ['error', 'warn', 'info'],
     }],
     indent: ['error', 2, { MemberExpression: 0 }],
+    'no-multi-spaces': 'off',
     // Turn off warnings for modern browsers
     'no-restricted-syntax': 'off',
     'no-await-in-loop': 'off',
-    'no-multi-spaces': 'off',
-  },
-  settings: {
-    react: {
-      pragma: 'h',
-    },
   },
 };

@@ -5,7 +5,7 @@ const requireCase = require.context('./cases', true, /\/index\.js$/);
 const names = requireCase.keys().map(path => path.slice(2, -9));
 
 const container = <div id="root"></div>;
-document.body.append(<h1>WebGL</h1>, container);
+document.body.append(<h1>three.js</h1>, container);
 window.addEventListener('hashchange', loadCase, false);
 loadCase();
 

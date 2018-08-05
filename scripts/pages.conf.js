@@ -11,4 +11,13 @@ module.exports = {
       title: 'WebGL',
     },
   },
+  three: {
+    entry: './src/three',
+    html: {
+      title: 'three.js',
+      js: [
+        'https://cdn.jsdelivr.net/npm/three@0.94.0/build/three.min.js',
+      ],
+    },
+  },
 };

@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.51",
-    "@gera2ld/jsx-dom": "^0.1.0"
+    "@gera2ld/jsx-dom": "^0.1.0",
+    "three": "^0.94.0"
   }
 }

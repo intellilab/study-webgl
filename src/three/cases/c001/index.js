@@ -20,9 +20,7 @@ export default function init(container) {
   const camera = new PerspectiveCamera(45, WIDTH / HEIGHT, 0.1, 1000);
   camera.position.set(0, 0, 200);
   camera.lookAt(new Vector3(0, 0, 0));
-
   const scene = new Scene();
-  scene.add(camera);
 
   const material = new MeshBasicMaterial({ color: 0xffff00 });
   const geometry = new Geometry();

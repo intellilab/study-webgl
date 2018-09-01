@@ -1,15 +1,16 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { isProd, styleRule, resolve } = require('../util');
+const OptimizeCssnanoPlugin = require('@intervolga/optimize-cssnano-plugin');
+const { isProd, styleRule, resolve, DIST } = require('../util');
 
-const defaultStyleOptions = {
-  loaders: ['postcss-loader'],
-};
-
-module.exports = config => {
+module.exports = options => config => {
+  const { style } = options;
+  const defaultStyleOptions = {
+    loaders: ['postcss-loader'],
+  };
   config.mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
   config.output = {
     ...config.output,
-    path: resolve('dist'),
+    path: resolve(DIST),
     publicPath: '',
     filename: '[name].js',
   };
@@ -34,24 +35,37 @@ module.exports = config => {
       include: [resolve('src'), resolve('test')],
     },
     // CSS modules: src/**/*.module.css
-    styleRule({ ...defaultStyleOptions, modules: true }, {
+    styleRule({
+      ...defaultStyleOptions,
+      ...style,
+      modules: true,
+    }, {
       test: /\.module\.css$/,
       exclude: [resolve('node_modules')],
     }),
     // normal CSS files: src/**/*.css
-    styleRule({ ...defaultStyleOptions }, {
+    styleRule({ ...defaultStyleOptions, ...style }, {
       exclude: [
         /\.module\.css$/,
         resolve('node_modules'),
       ],
     }),
     // library CSS files: node_modules/**/*.css
-    styleRule({}, {
+    styleRule(style, {
       include: [resolve('node_modules')],
     }),
   ];
   config.plugins = [
     ...config.plugins || [],
     isProd && new MiniCssExtractPlugin(),
+    isProd && new OptimizeCssnanoPlugin({
+      cssnanoOptions: {
+        preset: ['default', {
+          discardComments: {
+            removeAll: true,
+          },
+        }],
+      },
+    }),
   ].filter(Boolean);
 };

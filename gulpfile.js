@@ -4,9 +4,9 @@ const log = require('fancy-log');
 const webpack = require('webpack');
 const browserSync = require('browser-sync').create();
 const webpackConfig = require('./scripts/webpack.conf');
+const { DIST } = require('./scripts/util');
 
-const DIST = 'dist';
-const COPY = false;
+const COPY = true;
 
 function clean() {
   return del(DIST);
@@ -35,7 +35,6 @@ function jsProd(done) {
 function copyPublic() {
   if (!COPY) return Promise.resolve();
   return gulp.src('src/public/**', {
-    base: 'src',
     since: gulp.lastRun(copyPublic),
   })
   .pipe(gulp.dest(DIST));

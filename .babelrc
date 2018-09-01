@@ -6,7 +6,7 @@
     }],
   ],
   "plugins": [
-    ["@babel/plugin-transform-react-jsx", {"pragma": "h"}],
+    ["@babel/plugin-transform-react-jsx", { "pragma": "h" }],
     "@babel/plugin-transform-runtime",
 
     // stage-2

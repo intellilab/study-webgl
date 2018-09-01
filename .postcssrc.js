@@ -5,5 +5,5 @@ module.exports = {
     require('autoprefixer'),
     // Transform SCSS into CSS
     require('precss'),
-  ],
+  ].filter(Boolean),
 };

@@ -3,19 +3,18 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
+const DIST = 'dist';
 
 function styleLoader(options) {
   const {
     loaders = [],
     extract = isProd,
-    minimize = isProd,
     fallback = 'style-loader',
     modules = false,
   } = options || {};
   const cssLoader = {
     loader: 'css-loader',
     options: {
-      minimize,
       modules,
       importLoaders: 1,
       sourceMap: false,
@@ -40,6 +39,7 @@ function resolve(dir) {
   return path.join(__dirname, '..', dir);
 }
 
+exports.DIST = DIST;
 exports.isDev = isDev;
 exports.isProd = isProd;
 exports.styleLoader = styleLoader;

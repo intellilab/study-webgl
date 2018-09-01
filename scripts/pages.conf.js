@@ -16,7 +16,7 @@ module.exports = {
     html: {
       title: 'three.js',
       js: [
-        'https://cdn.jsdelivr.net/npm/three@0.94.0/build/three.min.js',
+        'https://cdn.jsdelivr.net/npm/three/build/three.min.js',
       ],
     },
   },

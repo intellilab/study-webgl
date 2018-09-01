@@ -36,9 +36,9 @@ module.exports = {
       allow: ['error', 'warn', 'info'],
     }],
     indent: ['error', 2, { MemberExpression: 0 }],
-    'no-multi-spaces': 'off',
     // Turn off warnings for modern browsers
     'no-restricted-syntax': 'off',
     'no-await-in-loop': 'off',
+    'no-multi-spaces': 'off',
   },
 };

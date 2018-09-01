@@ -14,6 +14,10 @@ export function initCanvas(container, width = 800, height = 600) {
 }
 
 export function initShaderProgram(gl, vsSource, fsSource) {
+  return createProgram(gl, [vsSource, fsSource]);
+}
+
+export function createProgram(gl, [vsSource, fsSource]) {
   const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
   const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
   const program = gl.createProgram();
@@ -31,4 +35,76 @@ export function loadShader(gl, type, source) {
   return shader;
 }
 
-export const getColor = memoize(() => [Math.random(), Math.random(), Math.random()]);
+export function random(min = 0, max = 1) {
+  return min + Math.random() * (max - min);
+}
+
+export const getColor = memoize(() => [random(), random(), random()]);
+
+export function createAttributeSetters(gl, program) {
+  const attribSetters = {};
+  const numAttribs = gl.getProgramParameter(program, gl.ACTIVE_ATTRIBUTES);
+  for (let i = 0; i < numAttribs; i += 1) {
+    const attribInfo = gl.getActiveAttrib(program, i);
+    attribSetters[attribInfo.name] = createAttribSetter(gl, program, attribInfo);
+  }
+  return attribSetters;
+}
+
+function createAttribSetter(gl, program, attribInfo) {
+  const index = gl.getAttribLocation(program, attribInfo.name);
+  return ({
+    buffer, numComponents, type, normalize, stride, offset,
+  }) => {
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.enableVertexAttribArray(index);
+    gl.vertexAttribPointer(
+      index,
+      numComponents,
+      type || gl.FLOAT,
+      normalize || false,
+      stride || 0,
+      offset || 0,
+    );
+  };
+}
+
+export function setValues(setters, info) {
+  Object.entries(info).forEach(([key, value]) => {
+    const setter = setters[key];
+    if (setter) setter(value);
+  });
+}
+
+export function createBuffer(gl, array, type = gl.ARRAY_BUFFER, drawType = gl.STATIC_DRAW) {
+  const buffer = gl.createBuffer();
+  gl.bindBuffer(type, buffer);
+  gl.bufferData(type, array, drawType);
+  return buffer;
+}
+
+export function createUniformSetters(gl, program) {
+  const uniformSetters = {};
+  const numUniforms = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
+  for (let i = 0; i < numUniforms; i += 1) {
+    const uniformInfo = gl.getActiveUniform(program, i);
+    uniformSetters[uniformInfo.name] = createUniformSetter(gl, program, uniformInfo);
+  }
+  return uniformSetters;
+}
+
+function createUniformSetter(gl, program, uniformInfo) {
+  const { type } = uniformInfo;
+  const loc = gl.getUniformLocation(program, uniformInfo.name);
+  if (type === gl.FLOAT) return v => gl.uniform1f(loc, v);
+  if (type === gl.FLOAT_VEC2) return v => gl.uniform2fv(loc, v);
+  if (type === gl.FLOAT_VEC3) return v => gl.uniform3fv(loc, v);
+  if (type === gl.FLOAT_VEC4) return v => gl.uniform4fv(loc, v);
+  if (type === gl.INT) return v => gl.uniform1i(loc, v);
+  if (type === gl.INT_VEC2) return v => gl.uniform2iv(loc, v);
+  if (type === gl.INT_VEC3) return v => gl.uniform3iv(loc, v);
+  if (type === gl.INT_VEC4) return v => gl.uniform4iv(loc, v);
+  if (type === gl.FLOAT_MAT2) return v => gl.uniformMatrix2fv(loc, false, v);
+  if (type === gl.FLOAT_MAT3) return v => gl.uniformMatrix3fv(loc, false, v);
+  if (type === gl.FLOAT_MAT4) return v => gl.uniformMatrix4fv(loc, false, v);
+}

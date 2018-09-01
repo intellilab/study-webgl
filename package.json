@@ -11,6 +11,7 @@
     "build": "cross-env NODE_ENV=production gulp build",
     "lint": "eslint --ext .js,.vue .",
     "svgo": "svgo --config .svgo.yml src/resources/svg",
+    "analyze": "cross-env RUN_ENV=analyze npm run build",
     "deploy": "sh scripts/deploy.sh"
   },
   "engines": {
@@ -62,7 +63,8 @@
     "svg-sprite-loader": "^3.9.2",
     "sw-precache-webpack-plugin": "^0.11.5",
     "url-loader": "^1.1.1",
-    "webpack": "^4.17.1"
+    "webpack": "^4.17.1",
+    "webpack-bundle-analyzer": "^2.13.1"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",

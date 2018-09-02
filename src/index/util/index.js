@@ -5,6 +5,7 @@ export * as matrix from './matrix';
 export * as m3 from './m3';
 export * as m4 from './m4';
 export * as helper from './helper';
+export * as texture from './texture';
 
 export function initCanvas(container, width = 800, height = 600) {
   const canvas = <canvas width={width} height={height} />;
@@ -35,7 +36,7 @@ export function loadShader(gl, type, source) {
   return shader;
 }
 
-export function random(min = 0, max = 1) {
+export function random(max = 1, min = 0) {
   return min + Math.random() * (max - min);
 }
 

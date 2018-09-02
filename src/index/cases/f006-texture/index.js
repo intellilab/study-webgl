@@ -8,6 +8,7 @@ import {
   m4,
   helper,
   random,
+  texture,
 } from '../../util';
 import vsSource from './index.vert';
 import fsSource from './index.frag';
@@ -37,6 +38,15 @@ export default function init(container) {
         0, 0, 1,
       ],
     },
+    texcoord: {
+      numComponents: 2,
+      data: [
+        0, 0,
+        1, 0,
+        0, 1,
+        1, 1,
+      ],
+    },
   };
   const attribs = Object.entries(data)
   .reduce((map, [key, value]) => ({
@@ -64,12 +74,14 @@ export default function init(container) {
     color: [random(1, 0.3), random(1, 0.9), random(1, 0.2), 1],
     radX: random(TWICE_PI),
     radY: random(TWICE_PI),
-    radius: random(90, 20),
+    radZ: random(TWICE_PI),
+    radius: random(90, 10),
     stepX: random(0.05, 0.005),
     stepY: random(0.05, 0.005),
   }));
 
   setValues(uniformSetters, {
+    u_diffuse: texture.createStripeTexture(gl, { color2: '#ccc' }),
     u_reverseLightDirection: helper.normalizeV3([0.5, 0.7, 1]),
   });
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -84,6 +96,7 @@ export default function init(container) {
         m4.xRotation(item.radX),
         m4.yRotation(item.radY),
         m4.translation(0, 0, item.radius),
+        m4.zRotation(item.radZ),
       ].reduce(m4.multiply);
       const matrix = [
         baseMatrix,

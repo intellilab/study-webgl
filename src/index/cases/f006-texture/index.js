@@ -4,7 +4,8 @@ import {
   createAttributeSetters,
   createUniformSetters,
   setValues,
-  createBuffer,
+  createBufferInfo,
+  drawBufferInfo,
   m4,
   helper,
   random,
@@ -20,45 +21,44 @@ export default function init(container) {
   const { gl } = initCanvas(container, WIDTH, HEIGHT);
   const program = createProgram(gl, [vsSource, fsSource]);
   const data = {
-    position: {
-      numComponents: 3,
-      data: [
-        -10, -10, 0,
-        10, -10, 0,
-        -10, 10, 0,
-        10, 10, 0,
-      ],
+    arrays: {
+      position: {
+        numComponents: 3,
+        data: [
+          -10, -10, 0,
+          10, -10, 0,
+          -10, 10, 0,
+          10, 10, 0,
+        ],
+      },
+      normal: {
+        numComponents: 3,
+        data: [
+          0, 0, 1,
+          0, 0, 1,
+          0, 0, 1,
+          0, 0, 1,
+        ],
+      },
+      texcoord: {
+        numComponents: 2,
+        data: [
+          0, 0,
+          1, 0,
+          0, 1,
+          1, 1,
+        ],
+      },
     },
-    normal: {
-      numComponents: 3,
-      data: [
-        0, 0, 1,
-        0, 0, 1,
-        0, 0, 1,
-        0, 0, 1,
-      ],
-    },
-    texcoord: {
-      numComponents: 2,
-      data: [
-        0, 0,
-        1, 0,
-        0, 1,
-        1, 1,
-      ],
-    },
+    indices: [
+      0, 1, 2,
+      1, 2, 3,
+    ],
   };
-  const attribs = Object.entries(data)
-  .reduce((map, [key, value]) => ({
-    ...map,
-    [`a_${key}`]: {
-      buffer: createBuffer(gl, new Float32Array(value.data)),
-      numComponents: value.numComponents,
-    },
-  }), {});
+  const bufferInfo = createBufferInfo(gl, data);
   const attribSetters = createAttributeSetters(gl, program);
   const uniformSetters = createUniformSetters(gl, program);
-  setValues(attribSetters, attribs);
+  setValues(attribSetters, bufferInfo.attribs);
 
   const camera = [0, 0, 200];
   const target = [0, 0, 0];
@@ -107,7 +107,7 @@ export default function init(container) {
         u_world: worldMatrix,
         u_worldViewProjection: matrix,
       });
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      drawBufferInfo(gl, bufferInfo);
       item.radX += item.stepX;
       item.radY += item.stepY;
     });

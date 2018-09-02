@@ -77,6 +77,47 @@ export function setValues(setters, info) {
   });
 }
 
+export function createBufferInfo(gl, { arrays, indices }) {
+  const attribs = Object.entries(arrays)
+  .reduce((map, [key, value]) => ({
+    ...map,
+    [`a_${key}`]: {
+      buffer: createBuffer(gl, createTypedArray(value.data, value.type)),
+      numComponents: value.numComponents,
+    },
+  }), {});
+  const bufferInfo = {
+    attribs,
+  };
+  if (indices) {
+    bufferInfo.indices = createBuffer(
+      gl,
+      createTypedArray(indices, Uint16Array),
+      gl.ELEMENT_ARRAY_BUFFER,
+    );
+    bufferInfo.numElements = indices.length;
+  } else {
+    const [value] = Object.values(arrays);
+    bufferInfo.numElements = value.data.length / value.numComponents;
+  }
+  return bufferInfo;
+}
+
+function createTypedArray(array, type) {
+  const Type = type || Float32Array;
+  return new Type(array);
+}
+
+export function drawBufferInfo(gl, bufferInfo, type = gl.TRIANGLES, count, offset = 0) {
+  const { indices } = bufferInfo;
+  const numElements = count || bufferInfo.numElements;
+  if (indices) {
+    gl.drawElements(type, numElements, gl.UNSIGNED_SHORT, offset);
+  } else {
+    gl.drawArrays(type, offset, numElements);
+  }
+}
+
 export function createBuffer(gl, array, type = gl.ARRAY_BUFFER, drawType = gl.STATIC_DRAW) {
   const buffer = gl.createBuffer();
   gl.bindBuffer(type, buffer);

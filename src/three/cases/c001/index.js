@@ -24,14 +24,21 @@ export default function init(container) {
 
   const material = new MeshBasicMaterial({ color: 0xffff00 });
   const geometry = new Geometry();
+  const sqrt3d3 = Math.sqrt(3) / 3;
   geometry.vertices.push(
-    new Vector3(0, 50, 0),
-    new Vector3(-50, 0, 0),
-    new Vector3(50, 0, 0),
+    new Vector3(0, sqrt3d3 * 2, 0),
+    new Vector3(-1, -sqrt3d3, 0),
+    new Vector3(1, -sqrt3d3, 0),
   );
   geometry.faces.push(new Face3(0, 1, 2));
-  const line = new Mesh(geometry, material);
-  scene.add(line);
+  const triangle = new Mesh(geometry, material);
+  triangle.scale.multiplyScalar(30);
+  scene.add(triangle);
+  rotate();
 
-  renderer.render(scene, camera);
+  function rotate() {
+    requestAnimationFrame(rotate);
+    triangle.rotation.z += 0.01;
+    renderer.render(scene, camera);
+  }
 }

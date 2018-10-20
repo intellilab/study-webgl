@@ -4,9 +4,13 @@
       "modules": false,
       "useBuiltIns": "usage"
     }],
+
+    // react
+    ["@babel/preset-react", {
+      "pragma": "h",
+    }],
   ],
   "plugins": [
-    ["@babel/plugin-transform-react-jsx", { "pragma": "h" }],
     "@babel/plugin-transform-runtime",
 
     // stage-2
@@ -19,7 +23,17 @@
     // stage-3
     "@babel/plugin-syntax-dynamic-import",
     "@babel/plugin-syntax-import-meta",
-    ["@babel/plugin-proposal-class-properties", { "loose": false }],
+    // Use loose mode: facebook/create-react-app#4263
+    ["@babel/plugin-proposal-class-properties", { "loose": true }],
     "@babel/plugin-proposal-json-strings",
+
+    ["module-resolver", {
+      "alias": {
+        "#": "./src",
+      },
+      "extensions": [
+        ".js", ".vue"
+      ],
+    }],
   ]
 }

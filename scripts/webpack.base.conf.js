@@ -1,14 +1,17 @@
+const webpackUtil = require('webpack-util/webpack');
+// const { isProd, defaultOptions } = require('webpack-util/util');
+
+// defaultOptions.hashedFilename = isProd;
+
 const baseConfig = [
-  require('./webpack/common')({
-    style: {
-      fallback: 'style-loader',
-    },
-  }),
-  require('./webpack/url')(),
-  require('./webpack/raw')(),
-  require('./webpack/svg')(),
-  // require('./webpack/sw')(),
-  process.env.RUN_ENV === 'analyze' && require('./webpack/analyze')(),
+  webpackUtil.common(),
+  webpackUtil.css(),
+  webpackUtil.url(),
+  webpackUtil.raw(),
+  webpackUtil.svg(),
+  webpackUtil.devServer(),
+  // webpackUtil.sw(),
+  process.env.RUN_ENV === 'analyze' && webpackUtil.analyze(),
 ]
 .filter(Boolean)
 .reduce(

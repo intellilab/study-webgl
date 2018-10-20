@@ -4,7 +4,7 @@ import './style.css';
 const requireCase = require.context('./cases', true, /\/index\.js$/);
 const names = requireCase.keys().map(path => path.slice(2, -9));
 
-const container = <div id="root"></div>;
+const container = <div id="root" />;
 document.body.append(<h1>WebGL</h1>, container);
 window.addEventListener('hashchange', loadCase, false);
 loadCase();
@@ -17,8 +17,10 @@ async function loadCase() {
     container.append(<div><a href="#">&larr; Back</a></div>);
     init(container);
   } else {
-    container.append(<ul>
-      {names.map(name => <li><a href={`#${name}`}>{name}</a></li>)}
-    </ul>);
+    container.append(
+      <ul>
+        {names.map(name => <li><a href={`#${name}`}>{name}</a></li>)}
+      </ul>,
+    );
   }
 }

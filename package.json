@@ -27,7 +27,7 @@
     "@babel/preset-react": "^7.0.0",
     "husky": "^1.2.1",
     "svgo": "^1.1.1",
-    "webpack-util": "^0.1.14"
+    "webpack-util": "^0.1.16"
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",

@@ -91,7 +91,7 @@ export default function init(container) {
   function draw() {
     requestAnimationFrame(draw);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    items.forEach(item => {
+    items.forEach((item) => {
       const worldMatrix = [
         m4.xRotation(item.radX),
         m4.yRotation(item.radY),

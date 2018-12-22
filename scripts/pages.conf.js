@@ -1,7 +1,8 @@
 /**
- * For each entry, `key` is the chunk name,
- * `value.entry` is the webpack entry,
- * `value.html` is the options object passed to HtmlWebpackPlugin.
+ * For each entry, `key` is the chunk name, `value` has following properties:
+ * - value.entry: webpack entry.
+ * - value.html: options object passed to HtmlWebpackPlugin.
+ * - value.html.inlineSource: if true, JS and CSS files will be inlined in HTML.
  */
 
 module.exports = {
@@ -14,7 +15,7 @@ module.exports = {
   three: {
     entry: './src/three',
     html: {
-      title: 'three.js',
+      title: 'Three',
       js: [
         'https://cdn.jsdelivr.net/npm/three/build/three.min.js',
       ],

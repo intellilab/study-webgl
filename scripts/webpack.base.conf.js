@@ -1,5 +1,5 @@
 const webpackUtil = require('webpack-util/webpack');
-// const { isProd, defaultOptions } = require('webpack-util/util');
+const { isProd, defaultOptions } = require('webpack-util/util');
 
 // defaultOptions.hashedFilename = isProd;
 

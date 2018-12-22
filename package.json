@@ -25,15 +25,15 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.0.0",
-    "eslint": "^5.9.0",
-    "husky": "^1.2.0",
+    "husky": "^1.2.1",
     "svgo": "^1.1.1",
-    "webpack-util": "^0.1.12"
+    "webpack-util": "^0.1.14"
   },
   "dependencies": {
-    "@babel/runtime": "^7.1.5",
+    "@babel/runtime": "^7.2.0",
     "@gera2ld/jsx-dom": "^0.1.1",
-    "core-js": "^2.5.7",
+    "@gera2ld/rem": "^0.1.1",
+    "core-js": "^2.6.1",
     "three": "^0.99.0"
   }
 }

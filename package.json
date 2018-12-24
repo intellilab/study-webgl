@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.0.0",
+    "gh-pages": "^2.0.1",
     "husky": "^1.2.1",
     "svgo": "^1.1.1",
     "webpack-util": "^0.1.16"

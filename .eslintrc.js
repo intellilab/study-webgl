@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   extends: [
-    require.resolve('webpack-util/eslint'),
+    require.resolve('@gera2ld/plaid/eslint'),
     require.resolve('./scripts/eslint/jsx'),
   ],
   parserOptions: {

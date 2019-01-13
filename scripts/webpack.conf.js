@@ -1,5 +1,7 @@
-const { html } = require('webpack-util/webpack');
-const config = require('./webpack.base.conf');
-const pages = require('./pages.conf');
+const { modifyWebpackConfig } = require('@gera2ld/plaid/util');
 
-module.exports = async () => await html({ pages })(await config);
+module.exports = modifyWebpackConfig(async (config) => {
+  config.externals = {
+    three: 'THREE',
+  };
+});

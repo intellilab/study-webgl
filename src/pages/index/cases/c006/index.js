@@ -24,7 +24,7 @@ export default async function init(container) {
   gl.vertexAttribPointer(aTexCoord, 2, gl.FLOAT, false, fSize * 4, fSize * 2);
   gl.enableVertexAttribArray(aTexCoord);
 
-  const image = await loadImage('/public/kenny.png');
+  const image = await loadImage('kenny.png');
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
   gl.activeTexture(gl.TEXTURE0);
   const texture = gl.createTexture();

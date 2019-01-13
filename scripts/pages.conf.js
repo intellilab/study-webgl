@@ -7,13 +7,11 @@
 
 module.exports = {
   index: {
-    entry: './src/index',
     html: {
       title: 'WebGL',
     },
   },
   three: {
-    entry: './src/three',
     html: {
       title: 'Three',
       js: [

@@ -1,4 +1,4 @@
-import h from '@gera2ld/jsx-dom';
+import React from '@gera2ld/jsx-dom';
 import { initCanvas, initShaderProgram } from '../../util';
 import vsSource from './index.vert';
 import fsSource from './index.frag';

@@ -4,8 +4,7 @@
  * - value.html: options object passed to HtmlWebpackPlugin.
  * - value.html.inlineSource: if true, JS and CSS files will be inlined in HTML.
  */
-
-module.exports = {
+exports.pages = {
   index: {
     html: {
       title: 'WebGL',
@@ -18,5 +17,11 @@ module.exports = {
         'https://cdn.jsdelivr.net/npm/three/build/three.min.js',
       ],
     },
+  },
+};
+
+exports.global = {
+  externals: {
+    three: 'THREE',
   },
 };

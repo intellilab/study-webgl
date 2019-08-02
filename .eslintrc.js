@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   extends: [
     require.resolve('@gera2ld/plaid/eslint'),
-    require.resolve('./scripts/eslint/jsx'),
+    require.resolve('@gera2ld/plaid-react/eslint/react'),
   ],
   parserOptions: {
     ecmaFeatures: {

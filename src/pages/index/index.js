@@ -1,26 +1,27 @@
 import React from '@gera2ld/jsx-dom';
-import './style.css';
+import '#/common/style.css';
 
 const requireCase = require.context('./cases', true, /\/index\.js$/);
 const names = requireCase.keys().map(path => path.slice(2, -9));
 
-const container = <div id="root" />;
-document.body.append(<h1>WebGL</h1>, container);
+const aside = (
+  <aside>
+    <h1>WebGL</h1>
+    <ul>
+      {names.map(name => <li><a href={`#${name}`}>{name}</a></li>)}
+    </ul>
+  </aside>
+);
+const container = <main>hello, world</main>;
+document.body.append(aside, container);
 window.addEventListener('hashchange', loadCase, false);
 loadCase();
 
 async function loadCase() {
   const key = window.location.hash.slice(1);
-  container.innerHTML = '';
   if (key) {
     const { default: init } = await requireCase(`./${key}/index.js`);
-    container.append(<div><a href="#">&larr; Back</a></div>);
+    container.innerHTML = '';
     init(container);
-  } else {
-    container.append(
-      <ul>
-        {names.map(name => <li><a href={`#${name}`}>{name}</a></li>)}
-      </ul>,
-    );
   }
 }

@@ -29,4 +29,7 @@ exports.global = {
   externals: {
     three: 'THREE',
   },
+  htmlOptions: {
+    meta: {},
+  },
 };

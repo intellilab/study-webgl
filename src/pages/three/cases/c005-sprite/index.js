@@ -16,7 +16,7 @@ async function loadResources() {
   const data = {};
   data.kenny = await new Promise((resolve) => {
     const textureLoader = new TextureLoader();
-    textureLoader.load('/kenny.png', resolve);
+    textureLoader.load('kenny.png', resolve);
   });
   return data;
 }

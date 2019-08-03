@@ -8,19 +8,9 @@ exports.pages = {
   index: {
     html: {
       title: 'WebGL',
-    },
-  },
-  three: {
-    html: {
-      title: 'Three',
       js: [
         'https://cdn.jsdelivr.net/npm/three/build/three.min.js',
       ],
-    },
-  },
-  '2d': {
-    html: {
-      title: '2D',
     },
   },
 };
@@ -29,6 +19,7 @@ exports.global = {
   externals: {
     three: 'THREE',
   },
+  hashedFilename: true,
   htmlOptions: {
     meta: {},
   },

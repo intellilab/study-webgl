@@ -18,6 +18,11 @@ exports.pages = {
       ],
     },
   },
+  '2d': {
+    html: {
+      title: '2D',
+    },
+  },
 };
 
 exports.global = {

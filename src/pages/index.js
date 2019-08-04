@@ -1,10 +1,10 @@
 import React from '@gera2ld/jsx-dom';
 import '#/common/style.css';
 
-const requireCase = require.context('.', true, /\/cases\/[^/]+\/index\.js$/);
+const requireCase = require.context('.', true, /\/[^/]+\/index\.js$/);
 const contents = requireCase.keys()
 .reduce((map, item) => {
-  const [, groupName, key] = item.match(/^\.\/([^/]+)\/cases\/([^/]+)\/index\.js$/);
+  const [, groupName, key] = item.match(/^\.\/([^/]+)\/([^/]+)\/index\.js$/);
   let list = map[groupName];
   if (!list) {
     list = [];
@@ -36,7 +36,7 @@ async function loadCase() {
   const [groupName, name] = window.location.hash.slice(1).split('/');
   container.innerHTML = '';
   if (groupName && name) {
-    const { default: init } = await requireCase(`./${groupName}/cases/${name}/index.js`);
+    const { default: init } = await requireCase(`./${groupName}/${name}/index.js`);
     init(container);
   } else {
     container.append(<h1>Hello, WebGL!</h1>);

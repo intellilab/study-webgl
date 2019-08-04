@@ -10,13 +10,13 @@ class Dot {
   constructor() {
     this.radius = DOT_RADIUS;
     this.theta = Math.random() * 2 * Math.PI;
-    this.phi = (Math.random() - 0.5) * Math.PI;
+    this.phi = Math.acos(Math.random() * 2 - 1) - Math.PI / 2;
   }
 
   draw(ctx, alpha) {
     this.x = GLOBE_RADIUS * Math.cos(this.phi) * Math.cos(this.theta);
-    this.y = GLOBE_RADIUS * Math.cos(this.phi) * Math.sin(this.theta);
-    this.z = GLOBE_RADIUS * Math.sin(this.phi);
+    this.y = GLOBE_RADIUS * Math.sin(this.phi);
+    this.z = GLOBE_RADIUS * Math.cos(this.phi) * Math.sin(this.theta);
     const cosA = Math.cos(alpha);
     const sinA = Math.sin(alpha);
     const z = this.z * cosA - this.x * sinA;
@@ -24,7 +24,7 @@ class Dot {
     this.scale = PERSPECTIVE / (PERSPECTIVE + GLOBE_RADIUS - z);
     this.xProjected = x * this.scale + WIDTH / 2;
     this.yProjected = HEIGHT / 2 - this.y * this.scale;
-    ctx.globalAlpha = (1 + z / GLOBE_RADIUS) / 2;
+    ctx.fillStyle = `rgba(0,0,0,${(1 + z / GLOBE_RADIUS) / 2})`;
     ctx.beginPath();
     ctx.arc(this.xProjected, this.yProjected, DOT_RADIUS * this.scale, 0, 2 * Math.PI);
     ctx.fill();

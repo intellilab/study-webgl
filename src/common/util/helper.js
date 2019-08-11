@@ -179,7 +179,7 @@ export function identity(size) {
   return out;
 }
 
-export function transformPoint(mat, point) {
+export function transformP(mat, point) {
   const vec = [...point, 1];
   const transformed = multiplyV(mat, vec);
   const w = transformed.pop();

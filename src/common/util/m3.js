@@ -1,4 +1,4 @@
-import { multiplyM } from './helper';
+import { multiplyM, transformP } from './helper';
 
 export function identity() {
   return [
@@ -34,8 +34,8 @@ export function scaling(sx, sy) {
   ];
 }
 
-export function multiply(mat1, mat2) {
-  return multiplyM(mat1, mat2, 3);
+export function multiply(...matrices) {
+  return matrices.reduce((res, mat) => multiplyM(res, mat, 3));
 }
 
 export function projection(width, height) {
@@ -44,4 +44,9 @@ export function projection(width, height) {
     0, -2 / height, 0,
     -1, 1, 1,
   ];
+}
+
+export function transform(...matrices) {
+  const point = matrices.pop();
+  return transformP(multiply(...matrices), point);
 }

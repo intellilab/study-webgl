@@ -1,5 +1,5 @@
 import React from '@gera2ld/jsx-dom';
-import { helper, m3 } from '#/common/util';
+import { m3 } from '#/common/util';
 
 const WIDTH = 800;
 const HEIGHT = 600;
@@ -10,19 +10,19 @@ const DOT_RADIUS = 6;
 const STAR_WIDTH = 20;
 const STAR_HEIGHT = 20;
 let point1 = [0, 1];
-let point2 = helper.transformPoint(
-  m3.multiply(
-    m3.scaling(0.5, 0.5),
-    m3.rotation(Math.PI / 5),
-  ),
+let point2 = m3.transform(
+  m3.scaling(0.5, 0.5),
+  m3.rotation(Math.PI / 5),
   point1,
 );
 const points = [point1, point2];
-const mRotate = m3.rotation(Math.PI * 2 / 5);
-for (let i = 0; i < 4; i += 1) {
-  point1 = helper.transformPoint(mRotate, point1);
-  point2 = helper.transformPoint(mRotate, point2);
-  points.push(point1, point2);
+{
+  const mRotate = m3.rotation(Math.PI * 2 / 5);
+  for (let i = 0; i < 4; i += 1) {
+    point1 = m3.transform(mRotate, point1);
+    point2 = m3.transform(mRotate, point2);
+    points.push(point1, point2);
+  }
 }
 const STAR_POINTS = points.map(([x, y]) => [
   STAR_WIDTH * (x + 1) / 2,
@@ -54,18 +54,21 @@ class Dot {
     this.x = GLOBE_RADIUS * Math.cos(this.phi) * Math.cos(this.theta);
     this.y = GLOBE_RADIUS * Math.sin(this.phi);
     this.z = GLOBE_RADIUS * Math.cos(this.phi) * Math.sin(this.theta);
-    const cosA = Math.cos(alpha);
-    const sinA = Math.sin(alpha);
-    const z = this.z * cosA - this.x * sinA;
-    const x = this.z * sinA + this.x * cosA;
-    this.scale = PERSPECTIVE / (PERSPECTIVE + GLOBE_RADIUS - z);
-    this.xProjected = x * this.scale + WIDTH / 2;
-    this.yProjected = HEIGHT / 2 - this.y * this.scale;
+    const [z, x] = m3.transform(
+      m3.rotation(alpha),
+      [this.z, this.x],
+    );
+    const scale = PERSPECTIVE / (PERSPECTIVE + GLOBE_RADIUS - z);
+    const [xProjected, yProjected] = m3.transform(
+      m3.translation(WIDTH / 2, HEIGHT / 2),
+      m3.scaling(scale, -scale),
+      [x, this.y],
+    );
     ctx.globalAlpha = (1 + z / GLOBE_RADIUS) / 2;
     ctx.drawImage(
       star,
-      this.xProjected - STAR_WIDTH / 2,
-      this.yProjected - STAR_HEIGHT / 2,
+      xProjected - STAR_WIDTH / 2,
+      yProjected - STAR_HEIGHT / 2,
       STAR_WIDTH,
       STAR_HEIGHT,
     );

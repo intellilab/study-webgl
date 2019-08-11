@@ -3,6 +3,7 @@ import {
   subtractV3,
   normalizeV3,
   crossV3,
+  transformP,
 } from './helper';
 
 export function translation(tx, ty, tz) {
@@ -56,10 +57,11 @@ export function scaling(sx, sy, sz) {
   ];
 }
 
-export function multiply(mat1, mat2) {
-  return multiplyM(mat1, mat2, 4);
+export function multiply(...matrices) {
+  return matrices.reduce((res, mat) => multiplyM(res, mat, 4));
 }
 
+// DEPRECATED in favor of orthographic
 // export function projection(width, height, depth) {
 //   return [
 //     2 / width, 0, 0, 0,
@@ -102,4 +104,9 @@ export function lookAt(camera, target, up) {
     ...zAxis, 0,
     ...camera, 1,
   ];
+}
+
+export function transform(...matrices) {
+  const point = matrices.pop();
+  return transformP(multiply(...matrices), point);
 }

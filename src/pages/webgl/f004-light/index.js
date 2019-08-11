@@ -141,7 +141,7 @@ export default function init(container) {
   ].reduce(m4.multiply);
   for (let i = 0; i < vertexData.length; i += 3) {
     const point = getPoint(i);
-    const transformed = helper.transformPoint(baseTransform, point);
+    const transformed = helper.transformP(baseTransform, point);
     for (let j = 0; j < 3; j += 1) vertexData[i + j] = transformed[j];
   }
   const normals = [];

@@ -180,14 +180,14 @@ export default function init(container) {
 
   function draw() {
     requestAnimationFrame(draw);
-    const matrix = [
+    const matrix = m4.multiply(
       m4.orthographic(0, 300, 300, 0, 200, -200),
       // m4.scaling(0.5, 0.5, 1.0),
       m4.translation(150, 150, 0),
       m4.xRotation(radX),
       m4.zRotation(radZ),
       m4.translation(-50, -75, 0),
-    ].reduce(m4.multiply);
+    );
     gl.uniformMatrix4fv(uMatrix, false, matrix);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLES, 0, 6 * 16);

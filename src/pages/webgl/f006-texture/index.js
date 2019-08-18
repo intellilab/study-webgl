@@ -64,10 +64,10 @@ export default function init(container) {
   const target = [0, 0, 0];
   const up = [0, 1, 0];
   const cameraMatrix = m4.lookAt(camera, target, up);
-  const baseMatrix = [
+  const baseMatrix = m4.multiply(
     m4.perspective(Math.PI / 3, WIDTH / HEIGHT, 1, 2000),
     helper.inverse(cameraMatrix, 4),
-  ].reduce(m4.multiply);
+  );
 
   const TWICE_PI = 2 * Math.PI;
   const items = Array.from({ length: 10 }, () => ({
@@ -92,16 +92,16 @@ export default function init(container) {
     requestAnimationFrame(draw);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     items.forEach((item) => {
-      const worldMatrix = [
+      const worldMatrix = m4.multiply(
         m4.xRotation(item.radX),
         m4.yRotation(item.radY),
         m4.translation(0, 0, item.radius),
         m4.zRotation(item.radZ),
-      ].reduce(m4.multiply);
-      const matrix = [
+      );
+      const matrix = m4.multiply(
         baseMatrix,
         worldMatrix,
-      ].reduce(m4.multiply);
+      );
       setValues(uniformSetters, {
         u_color: item.color,
         u_world: worldMatrix,

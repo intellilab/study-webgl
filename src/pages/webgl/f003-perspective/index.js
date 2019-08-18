@@ -179,21 +179,21 @@ export default function init(container) {
   let radX = 0.0;
   let radZ = 0.0;
   const TWICE_PI = 2 * Math.PI;
-  const baseMatrix = [
+  const baseMatrix = m4.multiply(
     m4.perspective(Math.PI / 3, WIDTH / HEIGHT, 1, 2000),
     // m4.scaling(0.5, 0.5, 1.0),
     m4.translation(0, 0, -360),
-  ].reduce(m4.multiply);
+  );
   draw();
 
   function draw() {
     requestAnimationFrame(draw);
-    const matrix = [
+    const matrix = m4.multiply(
       baseMatrix,
       m4.xRotation(radX),
       m4.zRotation(radZ),
       m4.translation(-50, -75, 0),
-    ].reduce(m4.multiply);
+    );
     gl.uniformMatrix4fv(uMatrix, false, matrix);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLES, 0, 6 * 16);

@@ -38,12 +38,12 @@ export default function init(container) {
   gl.enableVertexAttribArray(aPosition);
 
   const uMatrix = gl.getUniformLocation(program, 'u_matrix');
-  const matrix = [
+  const matrix = m3.multiply(
     m3.projection(300, 300),
     m3.translation(100, 100),
     m3.rotation(Math.PI / 6),
     m3.scaling(0.5, 0.5),
-  ].reduce(m3.multiply);
+  );
   gl.uniformMatrix3fv(uMatrix, false, matrix);
 
   const uColor = gl.getUniformLocation(program, 'u_color');

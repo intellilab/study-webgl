@@ -135,10 +135,10 @@ export default function init(container) {
     { length: n },
     (_1, j) => getPoint(i + 3 * j),
   );
-  const baseTransform = [
+  const baseTransform = m4.multiply(
     m4.xRotation(Math.PI),
     m4.translation(-50, -75, 0),
-  ].reduce(m4.multiply);
+  );
   for (let i = 0; i < vertexData.length; i += 3) {
     const point = getPoint(i);
     const transformed = helper.transformP(baseTransform, point);
@@ -190,21 +190,21 @@ export default function init(container) {
   const target = [0, 35, 0];
   const up = [0, 1, 0];
   const cameraMatrix = m4.lookAt(camera, target, up);
-  const baseMatrix = [
+  const baseMatrix = m4.multiply(
     m4.perspective(Math.PI / 3, WIDTH / HEIGHT, 1, 2000),
     helper.inverse(cameraMatrix, 4),
-  ].reduce(m4.multiply);
+  );
   draw();
 
   function draw() {
     requestAnimationFrame(draw);
-    const worldMatrix = [
+    const worldMatrix = m4.multiply(
       m4.yRotation(radY),
-    ].reduce(m4.multiply);
-    const matrix = [
+    );
+    const matrix = m4.multiply(
       baseMatrix,
       worldMatrix,
-    ].reduce(m4.multiply);
+    );
     gl.uniformMatrix4fv(uWorldViewProjection, false, matrix);
     gl.uniformMatrix4fv(uWorld, false, worldMatrix);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);

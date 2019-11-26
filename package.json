@@ -10,9 +10,7 @@
     "prebuild": "npm run lint",
     "build": "plaid build",
     "lint": "eslint --ext .js,.vue .",
-    "analyze": "plaid analyze",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "analyze": "plaid analyze"
   },
   "engines": {
     "node": ">= 10"
@@ -23,16 +21,15 @@
     }
   },
   "devDependencies": {
-    "@gera2ld/plaid": "^1.4.7",
-    "@gera2ld/plaid-react": "^1.4.0",
-    "@gera2ld/plaid-webpack": "^1.4.8",
-    "gh-pages": "^2.1.0",
-    "husky": "^3.0.2"
+    "@gera2ld/plaid": "^1.5.4",
+    "@gera2ld/plaid-react": "^1.5.3",
+    "@gera2ld/plaid-webpack": "^1.5.4",
+    "husky": "^3.1.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
+    "@babel/runtime": "^7.7.4",
     "@gera2ld/jsx-dom": "^1.1.2",
     "@gera2ld/rem": "^0.1.2",
-    "three": "^0.107.0"
+    "three": "^0.110.0"
   }
 }

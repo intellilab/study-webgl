@@ -183,6 +183,7 @@ export default function init(container) {
     m4.perspective(Math.PI / 3, WIDTH / HEIGHT, 1, 2000),
     // m4.scaling(0.5, 0.5, 1.0),
     m4.translation(0, 0, -360),
+    // m4.xRotation(Math.PI), // positive Y down -> positive Y up
   );
   draw();
 

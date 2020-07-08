@@ -1,20 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 canvas {
-  display: block;
-  margin: 0 auto;
+  @apply block mx-auto;
 }
 
-aside {
-  position: absolute;
-  width: 200px;
-  top: 0;
-  left: 0;
-  padding: 16px;
-}
-
-main {
-  margin-left: 200px;
-}
-
-.text-center {
-  text-align: center;
+li > a {
+  @apply block text-blue-600 px-2;
+  &:hover {
+    @apply text-blue-400 underline;
+  }
+  &:target {
+    @apply bg-blue-200;
+  }
 }

@@ -15,20 +15,20 @@ const contents = requireCase.keys()
 }, {});
 const groupNames = Object.keys(contents).sort();
 const aside = (
-  <aside>
-    <h1><a href="#">{document.title}</a></h1>
+  <aside className="w-64 p-2">
+    <h1 className="text-xl"><a className="font-bold text-gray-600 hover:text-gray-700" href="#">{document.title}</a></h1>
     {groupNames.map(groupName => (
       <section>
         <h2>{groupName}</h2>
         <ul>
-          {contents[groupName].map(name => <li><a href={`#${groupName}/${name}`}>{name}</a></li>)}
+          {contents[groupName].map(name => <li><a id={`${groupName}/${name}`} href={`#${groupName}/${name}`}>{name}</a></li>)}
         </ul>
       </section>
     ))}
   </aside>
 );
-const container = <main />;
-document.body.append(aside, container);
+const container = <main className="flex-1 p-2" />;
+document.body.append(<div className="flex">{aside}{container}</div>);
 window.addEventListener('hashchange', loadCase, false);
 loadCase();
 

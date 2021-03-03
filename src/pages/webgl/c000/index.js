@@ -1,4 +1,4 @@
-import React from '@gera2ld/jsx-dom';
+import * as React from '@gera2ld/jsx-dom';
 import { initCanvas, initShaderProgram } from '#/common/util';
 import vsSource from './index.vert';
 import fsSource from './index.frag';

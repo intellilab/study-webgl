@@ -1,4 +1,4 @@
-import React from '@gera2ld/jsx-dom';
+import * as React from '@gera2ld/jsx-dom';
 
 const canvas = <canvas />;
 const ctx = canvas.getContext('2d');

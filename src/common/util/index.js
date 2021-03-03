@@ -1,4 +1,4 @@
-import React from '@gera2ld/jsx-dom';
+import * as React from '@gera2ld/jsx-dom';
 import { memoize } from './helper';
 
 export * as matrix from './matrix';

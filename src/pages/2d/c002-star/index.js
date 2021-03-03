@@ -1,4 +1,4 @@
-import React from '@gera2ld/jsx-dom';
+import * as React from '@gera2ld/jsx-dom';
 import { m3 } from '#/common/util';
 
 const WIDTH = 800;

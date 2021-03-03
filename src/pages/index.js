@@ -1,4 +1,4 @@
-import React from '@gera2ld/jsx-dom';
+import * as React from '@gera2ld/jsx-dom';
 import '#/common/style.css';
 
 const requireCase = require.context('.', true, /\/[^/]+\/index\.js$/);

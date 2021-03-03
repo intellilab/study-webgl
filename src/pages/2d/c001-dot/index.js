@@ -1,4 +1,4 @@
-import React from '@gera2ld/jsx-dom';
+import * as React from '@gera2ld/jsx-dom';
 
 const WIDTH = 800;
 const HEIGHT = 600;
